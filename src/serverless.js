@@ -1,17 +1,16 @@
 import 'dotenv/config';
-import FormData from 'form-data'; 
+import FormData from 'form-data';
 import api from './app/services/api';
 import Cipher from './app/models/Cipher';
 
 async function main() {
-
   const cipher = await Cipher.load();
   cipher.saveToFile();
   cipher.decode();
   cipher.saveToFile();
   cipher.hash();
   cipher.saveToFile();
-  
+
   const form = new FormData();
 
   form.append('answer', cipher.getFileStream(), {
@@ -19,12 +18,11 @@ async function main() {
   });
 
   const response = await api.post('submit-solution', form, {
-    params: {token: process.env.TOKEN},
+    params: { token: process.env.TOKEN },
     headers: form.getHeaders()
   });
 
   console.log(response);
-
 }
 
 main();
@@ -51,9 +49,9 @@ const numero_casas = 3;
 
 // function encode(charCode) {
 //   // todo: verificar numero_casas > lastCharCode
-  
-//   const encodedCharCode =  charCode + numero_casas <= lastCharCode ? 
-//     charCode + numero_casas : charCode + numero_casas - firstCharCode; 
+
+//   const encodedCharCode =  charCode + numero_casas <= lastCharCode ?
+//     charCode + numero_casas : charCode + numero_casas - firstCharCode;
 //     console.log(charCode, encodedCharCode);
 //     return String.fromCharCode(encodedCharCode);
 // }
