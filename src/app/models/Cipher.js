@@ -9,7 +9,7 @@ const filePath = path.join(__dirname, '..', '..', '..', 'tmp', 'answer.json');
 class Cipher {
   async load() {
     const { data } = await api.get('generate-data', {
-      params: { token: process.env.TOKEN }
+      params: { token: process.env.TOKEN },
     });
     Object.assign(this, data);
     return this;
@@ -25,11 +25,7 @@ class Cipher {
   }
 
   encode() {
-    this.cifrado = this.decifrado
-      .toLowerCase()
-      .replace(/[a-z]/g, char =>
-        encoder.getEncodedChar(char, this.numero_casas)
-      );
+    this.cifrado = encoder.encode(this.decifrado, this.numero_casas);
   }
 
   hash() {
@@ -40,11 +36,7 @@ class Cipher {
   }
 
   decode() {
-    this.decifrado = this.cifrado
-      .toLowerCase()
-      .replace(/[a-z]/g, char =>
-        encoder.getDecodedChar(char, this.numero_casas)
-      );
+    this.decifrado = encoder.decode(this.cifrado, this.numero_casas);
   }
 }
 

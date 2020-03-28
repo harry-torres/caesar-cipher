@@ -14,12 +14,12 @@ class CipherController {
     const form = new FormData();
 
     form.append('answer', cipher.getFileStream(), {
-      filename: 'answer.json'
+      filename: 'answer.json',
     });
 
     const { data } = await api.post('submit-solution', form, {
       params: { token: process.env.TOKEN },
-      headers: form.getHeaders()
+      headers: form.getHeaders(),
     });
 
     return res.json(data);

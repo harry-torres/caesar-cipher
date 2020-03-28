@@ -7,7 +7,7 @@ function getEncodedCharCode(charCode, secret) {
     : getEncodedCharCode(charCode, secret - charsetSize);
 }
 
-export function getEncodedChar(char, secret) {
+function getEncodedChar(char, secret) {
   const charCode = charset.indexOf(char);
   const encodedCharCode = getEncodedCharCode(charCode, secret);
   return charset[encodedCharCode];
@@ -19,10 +19,24 @@ function getDecodedCharCode(charCode, secret) {
     : getDecodedCharCode(charCode, secret - charsetSize);
 }
 
-export function getDecodedChar(char, secret) {
+function getDecodedChar(char, secret) {
   const charCode = charset.indexOf(char);
   const decodedCharCode = getDecodedCharCode(charCode, secret);
   return charset[decodedCharCode];
+}
+
+function process(text, secret, func) {
+  const processedText = text
+    .toLowerCase()
+    .replace(/[a-z]/g, (char) => func(char, secret));
+  return processedText;
+}
+export function encode(decifrado, numero_casas) {
+  return process(decifrado, numero_casas, getEncodedChar);
+}
+
+export function decode(cifrado, numero_casas) {
+  return process(cifrado, numero_casas, getDecodedChar);
 }
 
 // const assert = require('assert');
